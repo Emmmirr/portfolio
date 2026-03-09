@@ -6,17 +6,24 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "JetBrains Mono", monospace;
 }
 
 body {
-  background: oklch(37.1% 0 0);
+  /* background: oklch(37.1% 0 0); */
+  background: #190A05;
   color: oklch(92% 0.004 286.32);
   padding: 1rem;
+  font-family: "JetBrains Mono", monospace;
+  
+
+  -webkit-font-smoothing: antialiased;
 }
 
 .personal-info {
-  min-height: calc(100dvh - 2rem);
+  width: 100%;
+  max-width: 1000px;
+  margin: 4rem auto;
+  /* min-height: calc(100dvh - 2rem); */
   display: flex;
   flex-direction: column;
 }
@@ -45,6 +52,7 @@ body {
 
 .intro {
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
   gap: 2rem;
@@ -62,18 +70,19 @@ body > * {
 
 h1 {
   font-size: 7rem;
+    font-weight: 400;
   line-height: 0.9;
   margin-left: -0.048em;
   /* word-spacing: -40px; */
 }
 
-h2{
-  font-size: 3rem;
+h2 {
+  font-size: 2.5rem;
 }
 
 .links-container {
   width: 100%;
-  margin-top: auto;
+  margin-top: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,7 +100,7 @@ section {
 
 p {
   font-size: 2rem;
-  max-width: 60ch;
+  max-width: 40ch;
 }
 
 @keyframes fadeIn {
@@ -104,35 +113,30 @@ p {
   }
 }
 
-.skills {
+main >  section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   margin-top: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 1rem;
 
-  header {
+  /* header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-}
+  } */
 
-.technologies {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 50vh;
-  min-width: 50%;
-
-  ul{
+    ul {
     display: flex;
     list-style: none;
     gap: 2rem;
 
-    li{
+    li {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -141,3 +145,111 @@ p {
     }
   }
 }
+
+.skills ul{
+  padding: 1rem;
+}
+
+.projects-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-inline: .5rem;
+}
+
+@media (min-width: 768px){
+  .projects-grid{
+    grid-template-columns: repeat(2, 1fr);
+    padding-inline: 1rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .projects-grid{
+    padding-inline: 1rem;
+  }
+}
+
+.projects article{
+
+}
+.grid-blueprint {
+  /* Posicionamiento: ocupa todo el contenedor */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  
+  /* Para que no interfiera con los clicks en botones/links */
+  pointer-events: none;
+  
+  /* Opacidad sutil */
+  opacity: 0.3;
+
+  /* Creación de la cuadrícula (Líneas horizontales y verticales) */
+  /* Nota: Reemplaza var(--primary) por tu color de texto o un blanco tenue */
+  background-image: 
+    linear-gradient(var(--primary, #ffffff) 1px, transparent 1px), 
+    linear-gradient(90deg, var(--primary, #ffffff) 1px, transparent 1px);
+  background-size: 15px 15px;
+
+  /* El desvanecimiento: visible arriba, invisible al llegar al 75% del alto */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+}
+
+.corner-dots-overlay {
+  /* Posicionamiento absoluto ocupando todo el contenedor */
+  position: absolute;
+  inset: 0; /* top, left, right, bottom: 0 */
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+
+  /* El patrón de puntos (dots) */
+  background-image: radial-gradient(
+    circle at 1px 1px, 
+    var(--primary, #ffffff) 1px, 
+    transparent 0
+  );
+  background-size: 16px 16px;
+
+  /* Las 4 Máscaras (una para cada esquina) */
+  -webkit-mask-image: 
+    radial-gradient(ellipse 40% 40% at 0% 0%, black 30%, transparent 70%),   /* Top-Left */
+    radial-gradient(ellipse 40% 40% at 100% 0%, black 30%, transparent 70%), /* Top-Right */
+    radial-gradient(ellipse 40% 40% at 0% 100%, black 30%, transparent 70%), /* Bottom-Left */
+    radial-gradient(ellipse 40% 40% at 100% 100%, black 30%, transparent 70%); /* Bottom-Right */
+
+  /* Combinar las máscaras para que se sumen */
+  -webkit-mask-composite: source-over; /* Para Chrome/Safari */
+  mask-composite: add;                 /* Estándar */
+}
+
+.perspective-grid-floor {
+  /* Posicionamiento base */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+
+  /* 1. La Cuadrícula (Líneas grandes de 60px) */
+  background-image: 
+    linear-gradient(var(--primary, #ffffff) 1px, transparent 1px), 
+    linear-gradient(90deg, var(--primary, #ffffff) 1px, transparent 1px);
+  background-size: 60px 60px;
+
+  /* 2. La Transformación 3D */
+  /* 'perspective' da profundidad y 'rotateX' inclina el plano */
+  transform: perspective(500px) rotateX(30deg);
+  /* El giro ocurre desde la base (el suelo) */
+  transform-origin: 50% 100%;
+
+  /* 3. El Desvanecimiento (Visible en el medio, desaparece en el horizonte y el frente) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 40%, transparent 100%);
+}
+
